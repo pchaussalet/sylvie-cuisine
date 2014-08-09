@@ -157,7 +157,7 @@
                 <div class="col-lg-10 col-lg-offset-1 translucent-background">
                     <h2>Mieux me connaitre</h2>
                     <p>
-                        <img src="img/sylvie.png" alt="Sylvie Streiff" class="hidden-print hidden-sm hidden-md hidden-lg"/>
+                        <img src="img/sylvie.png" alt="Sylvie Streiff" class="hidden-print hidden-sm hidden-md hidden-lg center-block"/>
                         <img src="img/sylvie.png" alt="Sylvie Streiff" class="hidden-xs pull-left"/>
                         Je m’appelle Sylvie Streiff, je suis née dans le Poitou en 1961 où j’ai passé toute mon enfance. A l’époque où les filles jouent à la poupée, moi je passe mon temps dans la ferme voisine à soigner les animaux, à parcourir les champs, à jardiner avec mon père. Déjà l’amour des beaux légumes fait son chemin et je ne tarde pas à passer beaucoup de temps aux fourneaux essayant de découvrir à quelle sauce ils vont être mangés. La pâtisserie m’attire très tôt aussi, alors je teste, j’innove, je perfectionne, je rectifie, bref, je m’éclate. Je fais de la pâtisserie pour tout le quartier.</p>
                     <p class="small-font">J’intègre donc l’école hôtelière de Poitiers pour y préparer un CAP et BEP de cuisine, que j’obtiens sans difficulté tant ma passion m’anime.
@@ -235,7 +235,7 @@
     <!-- Contact Section -->
     <section id="contact" class="container content-section text-center">
         <div class="row">
-            <div class="col-lg-10 col-lg-offset-1">
+            <div id="contactWrapper" class="col-lg-10 col-lg-offset-1">
                 <h2>Contactez moi</h2>
                 <div class="center-block">
                     <address>
@@ -256,7 +256,6 @@
                         </div>
                     </address>
                 </div>
-                <iframe src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" width="760" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
             </div>
         </div>
     </section>
@@ -282,6 +281,15 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
+
+    <script>
+        $(function() {
+            var container = '#contactWrapper';
+            var width = Math.min(760, $(container).width());
+            $('<iframe src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" width="' + width + '" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>')
+                    .appendTo(container);
+        })
+    </script>
 
 </body>
 
