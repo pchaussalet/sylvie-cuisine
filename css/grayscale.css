@@ -42,11 +42,21 @@ p {
 .underline {
   text-decoration: underline;
 }
-.address-block {
+address {
   font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
 }
-.address-block dd.no-xs {
+address div div {
+  display: inline-block;
+  margin-left: 0.5em;
+}
+address div div.row {
+  display: block;
+  margin-top: 0.5em;
+}
+address div div a {
+  font-size: 18px;
+}
+address.no-xs {
   text-align: left;
 }
 a {

@@ -157,7 +157,8 @@
                 <div class="col-lg-10 col-lg-offset-1 translucent-background">
                     <h2>Mieux me connaitre</h2>
                     <p>
-                        <img src="img/sylvie.png" alt="Sylvie Streiff" class="pull-left"/>
+                        <img src="img/sylvie.png" alt="Sylvie Streiff" class="hidden-print hidden-sm hidden-md hidden-lg"/>
+                        <img src="img/sylvie.png" alt="Sylvie Streiff" class="hidden-xs pull-left"/>
                         Je m’appelle Sylvie Streiff, je suis née dans le Poitou en 1961 où j’ai passé toute mon enfance. A l’époque où les filles jouent à la poupée, moi je passe mon temps dans la ferme voisine à soigner les animaux, à parcourir les champs, à jardiner avec mon père. Déjà l’amour des beaux légumes fait son chemin et je ne tarde pas à passer beaucoup de temps aux fourneaux essayant de découvrir à quelle sauce ils vont être mangés. La pâtisserie m’attire très tôt aussi, alors je teste, j’innove, je perfectionne, je rectifie, bref, je m’éclate. Je fais de la pâtisserie pour tout le quartier.</p>
                     <p class="small-font">J’intègre donc l’école hôtelière de Poitiers pour y préparer un CAP et BEP de cuisine, que j’obtiens sans difficulté tant ma passion m’anime.
                         Au terme de ma scolarité, je pars pour la Drôme pour rejoindre l’équipe de l’Auberge qui m’avait accueillie lors d’un stage en entreprise ; mon premier poste était assuré.
@@ -214,11 +215,11 @@
             <div class="col-lg-10 col-lg-offset-1">
                 <h2>Mes réalisations</h2>
                 <ul class="list-inline">
-                    <li><a href="#" onclick="return loadGallery('5534662061528495937')"><h5>Salades</h5></a></li>
-                    <li><a href="#" onclick="return loadGallery('5534649435349352481')"><h5>Buffets</h5></a></li>
-                    <li><a href="#" onclick="return loadGallery('5682353052448613553')"><h5>Plats</h5></a></li>
-                    <li><a href="#" onclick="return loadGallery('5534661297941910481')"><h5>Desserts</h5></a></li>
-                    <li><a href="#" onclick="return loadGallery('5534644689231926833')"><h5>Gateaux</h5></a></li>
+                    <li><a href="#gallery" onclick="return loadGallery('5534662061528495937')"><h5>Salades</h5></a></li>
+                    <li><a href="#gallery" onclick="return loadGallery('5534649435349352481')"><h5>Buffets</h5></a></li>
+                    <li><a href="#gallery" onclick="return loadGallery('5682353052448613553')"><h5>Plats</h5></a></li>
+                    <li><a href="#gallery" onclick="return loadGallery('5534661297941910481')"><h5>Desserts</h5></a></li>
+                    <li><a href="#gallery" onclick="return loadGallery('5534644689231926833')"><h5>Gateaux</h5></a></li>
                 </ul>
                 <div id="galleryWrapper"></div>
             </div>
@@ -227,7 +228,6 @@
             function loadGallery(id) {
                 $('#galleryWrapper').html('<div id="plusgallery" data-type="google" data-userid="117584989112280576716" data-album-id="' + id + '"></div>');
                 $('#plusgallery').plusGallery();
-                return false;
             }
         </script>
     </div>
@@ -237,23 +237,24 @@
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
                 <h2>Contactez moi</h2>
-                <div class="container address-block">
-                    <div class="col-xs-12 col-sm-6 col-xs-offset-0 col-sm-offset-2">
-                        <dl class="dl-horizontal">
-                            <!-- email -->
-                            <dt><i class="fa fa-envelope-o"></i></dt>
-                            <dd class="no-xs hidden-xs"><a href="mailto:contact@sylviecuisine.fr">contact@sylviecuisine.fr</a></dd>
-                            <dd class="hidden-sm hidden-md hidden-lg hidden-print"><a href="mailto:contact@sylviecuisine.fr">contact@sylviecuisine.fr</a></dd>
-                            <!-- mobile -->
-                            <dt><i class="fa fa-mobile"></i></dt>
-                            <dd class="no-xs hidden-xs"><a href="tel:0613944127">06.13.94.41.27</a></dd>
-                            <dd class="hidden-sm hidden-md hidden-lg hidden-print"><a href="tel:0613944127">06.13.94.41.27</a></dd>
-                            <!-- g+ -->
-                            <dt><i class="fa fa-google-plus-square"></i></dt>
-                            <dd class="no-xs hidden-xs"><a href="https://plus.google.com/112079427990019237167/about">Sylvie Cuisine</a></dd>
-                            <dd class="hidden-sm hidden-md hidden-lg hidden-print"><a href="https://plus.google.com/112079427990019237167/about">Sylvie Cuisine</a></dd>
-                        </dl>
-                    </div>
+                <div class="center-block">
+                    <address>
+                        <div>
+                            <div class="row">
+                                <div>
+                                    <i class="fa fa-2x fa-envelope-o"></i> <a href="mailto:contact@sylviecuisine.fr">contact@sylviecuisine.fr</a>
+                                </div>
+                                <div>
+                                    <i class="fa fa-2x fa-mobile"></i> <a href="tel:0613944127">06.13.94.41.27</a><br>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div>
+                                    <i class="fa fa-2x fa-google-plus"></i> <a href="https://plus.google.com/112079427990019237167/about">Sylvie Cuisine</a>
+                                </div>
+                            </div>
+                        </div>
+                    </address>
                 </div>
                 <iframe src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" width="760" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
             </div>
