@@ -59,6 +59,23 @@ address div div a {
 address.no-xs {
   text-align: left;
 }
+#loading {
+  background: url("../img/loading.gif") no-repeat center center;
+  height: 64px;
+  display: none;
+}
+#albumViewer {
+  box-shadow: none;
+}
+#albumViewer .modal-content {
+  background-color: transparent;
+  box-shadow: none;
+  border-width: 0;
+}
+#albumViewer .modal-body {
+  padding: 0;
+  box-shadow: none;
+}
 a {
   color: #919a33;
   -webkit-transition: all 0.2s ease-in-out;
