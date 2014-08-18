@@ -7,12 +7,13 @@ var PORTRAIT = 2;
 function listPictures(albumId, callback) {
     var albumUrl = 'https://picasaweb.google.com/data/feed/base/user/' + userId + '/albumid/' + albumId + '?alt=json&hl=' + lang;
     $.getJSON(albumUrl, function(data) {
+        console.log(data);
         var entries = data.feed.entry;
         var pictures = [];
         for (var i = 0; i < entries.length; i++) {
             var entry = entries[i].media$group;
             pictures.push({
-                title:  entry.media$title.$t,
+                title:  entry.media$description.$t || data.feed.title.$t,
                 url:    entry.media$content[0].url,
                 width:  entry.media$content[0].width,
                 height: entry.media$content[0].height,
@@ -42,6 +43,10 @@ function addPictureToCarousel(picture) {
         .attr('alt', picture.title)
         .addClass('center-block')
         .appendTo(container);
+    $('<div></div>')
+        .addClass('carousel-caption')
+        .append(picture.title)
+        .appendTo(container);
     if (getOrientation(picture) === LANDSCAPE) {
         image.width('100%');
     } else {
@@ -55,12 +60,14 @@ function openAlbum(current) {
     $albumSlides.children().removeClass('active');
     $albumSlides.children().slice(current, current+1).addClass('active');
     $('#albumViewer').modal();
-    $('.modal-dialog').height('calc(100% - 60px)');
+    $('.modal-dialog').height('auto');
 }
 
 function startSliding(way) {
     var carousel = $('#albumCarousel');
     $('.carousel-control').hide();
+    $('.carousel-caption').hide();
+    $('.modal-dialog').height('100%');
     $('.modal-content').height('100%');
     $('.modal-body').height('100%');
     carousel.height('100%');
@@ -75,14 +82,20 @@ var resetHeight = function() {
     $('#albumCarousel').height('auto');
     $('.modal-body').height('auto');
     $('.modal-content').height('auto');
+    $('.modal-dialog').height('auto');
+    $('.carousel-caption').show();
     $('.carousel-control').show();
 };
 
-function generateGallery(albumId) {
+function generateGallery(element) {
+    $('#galleries').find('a').removeClass('active');
+    var albumId = element.id;
     var $galleryParent = $('#galleryParent');
     var $loading = $('#loading');
+    var link = $(element).first();
     $galleryParent.hide();
     $loading.show();
+    link.addClass('active');
     listPictures(albumId, function(pictures) {
         $('#albumSlides').empty();
         $galleryParent.empty();

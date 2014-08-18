@@ -76,6 +76,19 @@ address.no-xs {
   padding: 0;
   box-shadow: none;
 }
+#albumViewer .carousel-caption {
+  background-color: rgba(127, 127, 127, 0.25);
+  font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+}
+#galleries a h5 {
+  padding: 2px;
+  color: #919a33;
+}
+#galleries a.active h5 {
+  background-color: #919a33;
+  color: white;
+}
 a {
   color: #919a33;
   -webkit-transition: all 0.2s ease-in-out;

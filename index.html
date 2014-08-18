@@ -21,7 +21,6 @@
     <link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="css/fonts/Lora/Lora.css" rel="stylesheet" type="text/css">
     <link href="css/fonts/Montserrat/Montserrat.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="css/plusgallery.css">
 
     <!--
         <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
@@ -229,12 +228,12 @@
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
                 <h2>Mes réalisations</h2>
-                <ul class="list-inline">
-                    <li><a href="#gallery" onclick="return generateGallery('5534662061528495937')"><h5>Salades</h5></a></li>
-                    <li><a href="#gallery" onclick="return generateGallery('5534649435349352481')"><h5>Buffets</h5></a></li>
-                    <li><a href="#gallery" onclick="return generateGallery('5682353052448613553')"><h5>Plats</h5></a></li>
-                    <li><a href="#gallery" onclick="return generateGallery('5534661297941910481')"><h5>Desserts</h5></a></li>
-                    <li><a href="#gallery" onclick="return generateGallery('5534644689231926833')"><h5>Gateaux</h5></a></li>
+                <ul id="galleries" class="list-inline">
+                    <li><a href="#gallery" id="5534662061528495937" onclick="return generateGallery(this)"><h5>Salades</h5></a></li>
+                    <li><a href="#gallery" id="5534649435349352481" onclick="return generateGallery(this)"><h5>Buffets</h5></a></li>
+                    <li><a href="#gallery" id="5682353052448613553" onclick="return generateGallery(this)"><h5>Plats</h5></a></li>
+                    <li><a href="#gallery" id="5534661297941910481" onclick="return generateGallery(this)"><h5>Desserts</h5></a></li>
+                    <li><a href="#gallery" id="5534644689231926833" onclick="return generateGallery(this)"><h5>Gateaux</h5></a></li>
                 </ul>
                 <div id="loading"></div>
                 <div id="galleryParent"></div>
@@ -297,12 +296,74 @@
     <script src="js/gallery.js"></script>
 
     <script>
+        var currentSection;
+        var oldSection;
+        var positions = {
+            0: {
+                0: 'page-top'
+            },
+            90: {
+                0: 'page-top'
+            }
+        };
+        var reversePositions = {
+            0: {
+                'page-top': 0
+            },
+            90: {
+                'page-top': 0
+            }
+        };
+        var points = {
+            0:[0],
+            90: [0]
+        };
+        function computePositions() {
+            $('.content-section').each(function (index, section) {
+                var point = parseInt($(section).offset().top, 10);
+                positions[Math.abs(orientation)][point] = section.id;
+                reversePositions[Math.abs(orientation)][section.id] = point;
+                points[Math.abs(orientation)].push(point);
+            });
+            points[Math.abs(orientation)].sort(function(a, b) { return a - b; });
+        }
         $(function() {
             var container = '#contactWrapper';
             var width = Math.min(760, $(container).width());
-            $('<iframe src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" width="' + width + '" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>')
+            $('<iframe   src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" ' +
+                        'width="' + width + '" ' +
+                        'height="600" ' +
+                        'frameborder="0" ' +
+                        'marginheight="0" ' +
+                        'marginwidth="0">Loading...</iframe>')
                     .appendTo(container);
-        })
+            computePositions();
+            currentSection = 'page-top';
+        });
+        var adjustPosition = function () {
+            if (points[Math.abs(orientation)].length == 1) {
+                setTimeout(function() {
+                    computePositions();
+                    var offset = reversePositions[Math.abs(orientation)][oldSection];
+                    if (offset) {
+                        $('body').scrollTop(offset);
+                    }
+                }, 100);
+            } else {
+                var offset = reversePositions[Math.abs(orientation)][oldSection];
+                if (offset) {
+                    $('body').scrollTop(offset);
+                }
+            }
+        };
+        $(window).on('orientationchange', adjustPosition);
+        $(document).on('scroll', function() {
+            var currentPosition = $(document).scrollTop();
+            var nextPoint = points[Math.abs(orientation)].filter(function(x) { return x > currentPosition; })[0];
+            var previousPoint = points[Math.abs(orientation)][points[Math.abs(orientation)].indexOf(nextPoint) - 1];
+            oldSection = currentSection;
+            currentSection = positions[Math.abs(orientation)][previousPoint];
+        });
     </script>
 
 </body>
