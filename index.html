@@ -305,28 +305,29 @@
     <script src="js/gallery.js"></script>
 
     <script>
-        var currentSection;
-        var oldSection;
-        var positions = {
-            0: {
-                0: 'page-top'
+        window.orientation = screen.orientation.angle;
+        var currentSection,
+            oldSection,
+            positions = {
+                0: {
+                    0: 'page-top'
+                },
+                90: {
+                    0: 'page-top'
+                }
             },
-            90: {
-                0: 'page-top'
-            }
-        };
-        var reversePositions = {
-            0: {
-                'page-top': 0
+            reversePositions = {
+                0: {
+                    'page-top': 0
+                },
+                90: {
+                    'page-top': 0
+                }
             },
-            90: {
-                'page-top': 0
-            }
-        };
-        var points = {
-            0:[0],
-            90: [0]
-        };
+            points = {
+                0:[0],
+                90: [0]
+            };
         function computePositions() {
             $('.content-section').each(function (index, section) {
                 var point = parseInt($(section).offset().top, 10);
@@ -350,6 +351,7 @@
             currentSection = 'page-top';
         });
         var adjustPosition = function () {
+            orientation = screen.orientation.angle;
             if (points[Math.abs(orientation)].length == 1) {
                 setTimeout(function() {
                     computePositions();
