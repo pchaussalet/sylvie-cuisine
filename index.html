@@ -376,7 +376,20 @@
                 oldSection = currentSection;
                 currentSection = positions[Math.abs(orientation)][previousPoint];
             });
-        }
+        } else {
+            $(function() {
+                var container = '#contactWrapper';
+                var width = Math.min(760, $(container).width());
+                $('<iframe   src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" ' +
+                            'width="' + width + '" ' +
+                            'height="785" ' +
+                            'frameborder="0" ' +
+                            'marginheight="0" ' +
+                            'marginwidth="0">Loading...</iframe>')
+                        .appendTo(container);
+                currentSection = 'page-top';
+            });
+        }        
     </script>
 
 </body>
