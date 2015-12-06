@@ -305,76 +305,78 @@
     <script src="js/gallery.js"></script>
 
     <script>
-        window.orientation = screen.orientation.angle;
-        var currentSection,
-            oldSection,
-            positions = {
-                0: {
-                    0: 'page-top'
+        if (screen.orientation) {
+            window.orientation = screen.orientation.angle;
+            var currentSection,
+                oldSection,
+                positions = {
+                    0: {
+                        0: 'page-top'
+                    },
+                    90: {
+                        0: 'page-top'
+                    }
                 },
-                90: {
-                    0: 'page-top'
-                }
-            },
-            reversePositions = {
-                0: {
-                    'page-top': 0
+                reversePositions = {
+                    0: {
+                        'page-top': 0
+                    },
+                    90: {
+                        'page-top': 0
+                    }
                 },
-                90: {
-                    'page-top': 0
-                }
-            },
-            points = {
-                0:[0],
-                90: [0]
-            };
-        function computePositions() {
-            $('.content-section').each(function (index, section) {
-                var point = parseInt($(section).offset().top, 10);
-                positions[Math.abs(orientation)][point] = section.id;
-                reversePositions[Math.abs(orientation)][section.id] = point;
-                points[Math.abs(orientation)].push(point);
+                points = {
+                    0:[0],
+                    90: [0]
+                };
+            function computePositions() {
+                $('.content-section').each(function (index, section) {
+                    var point = parseInt($(section).offset().top, 10);
+                    positions[Math.abs(orientation)][point] = section.id;
+                    reversePositions[Math.abs(orientation)][section.id] = point;
+                    points[Math.abs(orientation)].push(point);
+                });
+                points[Math.abs(orientation)].sort(function(a, b) { return a - b; });
+            }
+            $(function() {
+                var container = '#contactWrapper';
+                var width = Math.min(760, $(container).width());
+                $('<iframe   src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" ' +
+                            'width="' + width + '" ' +
+                            'height="785" ' +
+                            'frameborder="0" ' +
+                            'marginheight="0" ' +
+                            'marginwidth="0">Loading...</iframe>')
+                        .appendTo(container);
+                computePositions();
+                currentSection = 'page-top';
             });
-            points[Math.abs(orientation)].sort(function(a, b) { return a - b; });
-        }
-        $(function() {
-            var container = '#contactWrapper';
-            var width = Math.min(760, $(container).width());
-            $('<iframe   src="https://docs.google.com/forms/d/1WqGsSkDBvSTQIst4QvHPRZuwo3b_gnSE4_-8I89JuiU/viewform?embedded=true" ' +
-                        'width="' + width + '" ' +
-                        'height="785" ' +
-                        'frameborder="0" ' +
-                        'marginheight="0" ' +
-                        'marginwidth="0">Loading...</iframe>')
-                    .appendTo(container);
-            computePositions();
-            currentSection = 'page-top';
-        });
-        var adjustPosition = function () {
-            orientation = screen.orientation.angle;
-            if (points[Math.abs(orientation)].length == 1) {
-                setTimeout(function() {
-                    computePositions();
+            var adjustPosition = function () {
+                orientation = screen.orientation.angle;
+                if (points[Math.abs(orientation)].length == 1) {
+                    setTimeout(function() {
+                        computePositions();
+                        var offset = reversePositions[Math.abs(orientation)][oldSection];
+                        if (offset) {
+                            $('body').scrollTop(offset);
+                        }
+                    }, 100);
+                } else {
                     var offset = reversePositions[Math.abs(orientation)][oldSection];
                     if (offset) {
                         $('body').scrollTop(offset);
                     }
-                }, 100);
-            } else {
-                var offset = reversePositions[Math.abs(orientation)][oldSection];
-                if (offset) {
-                    $('body').scrollTop(offset);
                 }
-            }
-        };
-        $(window).on('orientationchange', adjustPosition);
-        $(document).on('scroll', function() {
-            var currentPosition = $(document).scrollTop();
-            var nextPoint = points[Math.abs(orientation)].filter(function(x) { return x > currentPosition; })[0];
-            var previousPoint = points[Math.abs(orientation)][points[Math.abs(orientation)].indexOf(nextPoint) - 1];
-            oldSection = currentSection;
-            currentSection = positions[Math.abs(orientation)][previousPoint];
-        });
+            };
+            $(window).on('orientationchange', adjustPosition);
+            $(document).on('scroll', function() {
+                var currentPosition = $(document).scrollTop();
+                var nextPoint = points[Math.abs(orientation)].filter(function(x) { return x > currentPosition; })[0];
+                var previousPoint = points[Math.abs(orientation)][points[Math.abs(orientation)].indexOf(nextPoint) - 1];
+                oldSection = currentSection;
+                currentSection = positions[Math.abs(orientation)][previousPoint];
+            });
+        }
     </script>
 
 </body>
