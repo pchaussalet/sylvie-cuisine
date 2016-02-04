@@ -60,6 +60,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 			emailMessage.SetFrom(contact.Email)
 			if r := sg.Send(emailMessage); r == nil {
 				fmt.Println("Email from " + contact.Email + " sent.")
+				w.WriteHeader(http.StatusOK)
 			} else {
 				fmt.Println(r)
 				w.WriteHeader(http.StatusBadRequest)
@@ -67,6 +68,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		} else {
 			w.WriteHeader(http.StatusForbidden)
 		}
+	} else if r.Method == "GET" {
+		w.WriteHeader(http.StatusOK)
 	}
 }
 
