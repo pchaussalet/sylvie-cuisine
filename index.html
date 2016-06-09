@@ -297,7 +297,7 @@
     <script src="js/jquery.easing.min.js"></script>
 
     <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRngKslUGJTlibkQ3FkfTxj3Xss1UlZDA&sensors=false"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="js/grayscale.js"></script>
@@ -338,6 +338,7 @@
                 });
                 points[Math.abs(orientation)].sort(function(a, b) { return a - b; });
             }
+/*
             $(function() {
                 var container = '#contactWrapper';
                 var width = Math.min(760, $(container).width());
@@ -351,6 +352,7 @@
                 computePositions();
                 currentSection = 'page-top';
             });
+*/
             var adjustPosition = function () {
                 orientation = screen.orientation.angle;
                 if (points[Math.abs(orientation)].length == 1) {
