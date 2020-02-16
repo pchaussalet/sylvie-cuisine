@@ -4,23 +4,23 @@ var lang = 'fr';
 var LANDSCAPE = 1;
 var PORTRAIT = 2;
 
-function listPictures(albumId, callback) {
-    var albumUrl = 'https://picasaweb.google.com/data/feed/base/user/' + userId + '/albumid/' + albumId + '?alt=json&hl=' + lang;
-    $.getJSON(albumUrl, function(data) {
-        console.log(data);
-        var entries = data.feed.entry;
-        var pictures = [];
-        for (var i = 0; i < entries.length; i++) {
-            var entry = entries[i].media$group;
-            pictures.push({
-                title:  entry.media$description.$t || data.feed.title.$t,
-                url:    entry.media$content[0].url,
-                width:  entry.media$content[0].width,
-                height: entry.media$content[0].height,
-                type:   entry.media$content[0].type,
-            });
+function generateGalleries(rootId) {
+    $.getJSON('https://sylvie-cuisine-gallery.pchaussalet.workers.dev/galleries/' + rootId, function (galleries) {
+        var root = $('#galleries');
+        for (var i = 0; i < galleries.length; i++) {
+            var gallery = galleries[i];
+            $('<li></li>').append(
+                $('<a href="#gallery" key="' + gallery.id + '" onclick="return generateGallery(this)"></a>').append(
+                    $('<h5>' + gallery.name + '</h5>')
+                )
+            ).appendTo(root);
         }
-        callback(pictures);
+    });
+}
+
+function listPictures(galleryId, callback) {
+    $.getJSON('https://sylvie-cuisine-gallery.pchaussalet.workers.dev/images/' + galleryId, function (data) {
+        callback(data);
     });
 }
 
@@ -39,26 +39,28 @@ function addPictureToCarousel(picture) {
         .height('100%')
         .appendTo($('#albumSlides'));
     var image = $('<img>')
-        .attr('src', picture.url)
-        .attr('alt', picture.title)
+        .attr('src', picture.webContentLink)
+        .attr('alt', picture.name)
         .addClass('center-block')
         .appendTo(container);
-    $('<div></div>')
-        .addClass('carousel-caption')
-        .append(picture.title)
-        .appendTo(container);
-    if (getOrientation(picture) === LANDSCAPE) {
-        image.width('100%');
-    } else {
-        image.height('100%');
+    if (picture.description) {
+        $('<div></div>')
+            .addClass('carousel-caption')
+            .append(picture.description)
+            .appendTo(container);
     }
-    return {container: container, image: image};
+    if (getOrientation(picture) === LANDSCAPE) {
+        image.height('auto');
+    } else {
+        image.width('auto');
+    }
+    return { container: container, image: image };
 }
 
 function openAlbum(current) {
     var $albumSlides = $('#albumSlides');
     $albumSlides.children().removeClass('active');
-    $albumSlides.children().slice(current, current+1).addClass('active');
+    $albumSlides.children().slice(current, current + 1).addClass('active');
     $('#albumViewer').modal();
     $('.modal-dialog').height('auto');
 }
@@ -77,7 +79,7 @@ function startSliding(way) {
     carousel.carousel(way);
 }
 
-var resetHeight = function() {
+var resetHeight = function () {
     $('#albumSlides').height('auto');
     $('#albumCarousel').height('auto');
     $('.modal-body').height('auto');
@@ -89,32 +91,31 @@ var resetHeight = function() {
 
 function generateGallery(element) {
     $('#galleries').find('a').removeClass('active');
-    var albumId = element.id;
+    var key = element.getAttribute('key');
     var $galleryParent = $('#galleryParent');
     var $loading = $('#loading');
     var link = $(element).first();
     $galleryParent.hide();
     $loading.show();
     link.addClass('active');
-    listPictures(albumId, function(pictures) {
+    listPictures(key, function (pictures) {
         $('#albumSlides').empty();
         $galleryParent.empty();
-        var gallery = $('<div></div>');
         for (var i = 0; i < pictures.length; i++) {
             var picture = pictures[i];
             var cell = $('<div></div>')
                 .addClass('col-md-2')
-                .addClass('col-sm-3')
+                // .addClass('col-sm-3')
                 .addClass('col-xs-4')
                 .appendTo($galleryParent);
             var link = $('<a></a>')
                 .attr('href', '#gallery')
                 .addClass('thumbnail')
-                .on('click', (function(current) {return function() { openAlbum(current); }; })(i))
+                .on('click', (function (current) { return function () { openAlbum(current); }; })(i))
                 .appendTo(cell);
             $('<img>')
-                .attr('src', getThumbnail(picture.url))
-                .attr('alt', picture.title)
+                .attr('src', picture.thumbnailLink)
+                .attr('alt', picture.name)
                 .appendTo(link);
             addPictureToCarousel(picture);
         }

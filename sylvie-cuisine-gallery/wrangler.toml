@@ -1,0 +1,7 @@
+name = "sylvie-cuisine-gallery"
+type = "webpack"
+webpack_config = "webpack.config.js"
+account_id = "de504e76b7506d0217c6ae0d4a7b7c8b"
+workers_dev = true
+route = ""
+zone_id = "0c2b1b1e1085934b22ecbb4cf84adaa7"
