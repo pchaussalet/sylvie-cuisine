@@ -305,6 +305,9 @@ a:focus {
   height: 200px;
   margin-top: 100px;
 }
+#map .leaflet-tile-pane {
+  filter: grayscale(1);
+}
 @media (min-width: 767px) {
   .content-section {
     padding-top: 150px;
